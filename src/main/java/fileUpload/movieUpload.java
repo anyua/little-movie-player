@@ -8,11 +8,16 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.opensymphony.xwork2.ActionSupport;
+
+import operations.FFMPEGOperation;
+import operations.HDFSOperation;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -21,7 +26,7 @@ public class movieUpload extends ActionSupport implements ServletRequestAware, S
 	
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	public static final String UPLOAD_DIR = "E:/temp/";
+	public static final String UPLOAD_DIR = "/home/hadoop/test/file";
 	
 	private String resumableChunkSize;
 	private String resumableTotalSize;
@@ -82,6 +87,15 @@ public class movieUpload extends ActionSupport implements ServletRequestAware, S
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             System.out.println("Finished: "+dateFormat.format(date));
+            
+            String name   = getResumableFilename();
+            String filePath = UPLOAD_DIR+"/"+name;
+            String outputPath = "/home/hadoop/test/split/";
+            HDFSOperation ho = new HDFSOperation();
+            FFMPEGOperation fo = new FFMPEGOperation();
+    		ArrayList<String> fileList = fo.split(filePath, outputPath);
+            ho.upLoad(name, outputPath, fileList);
+            
             response.getWriter().write("All finished.");
         } else {
             System.out.println("Not finished yet .."+chunkNumber);

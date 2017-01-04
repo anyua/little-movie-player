@@ -17,7 +17,7 @@ import org.apache.hadoop.io.IOUtils;
 public class HDFSOperation {
 	public ArrayList<String> getVideoList() throws IOException{
 		ArrayList<String> movielist = new ArrayList<String>();
-		String path = "/user/hadoop/input";
+		String path = "/user/hadoop/video";
 		
         String uri = "hdfs:/Master:9000/";  
         Configuration config = new Configuration();  

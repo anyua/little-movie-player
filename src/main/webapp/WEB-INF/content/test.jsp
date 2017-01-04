@@ -40,24 +40,11 @@
 		        </tr>
 		    </thead>
 		    <tbody>
+		    <s:iterator value = "videoList" id = "vl">
 		        <tr>
-		            <td>单元格1</td>
+		            <td><a href = "play?name=<s:property value = "vl" />"><s:property value = "vl" /></a></td>
 		        </tr>
-		        <tr>
-		            <td>单元格2</td>
-		        </tr>
-		        <tr>
-		            <td>单元格3</td>
-		        </tr>
-		        <tr>
-		            <td>单元格4</td>
-		        </tr>
-		        <tr>
-		            <td>单元格5</td>
-		        </tr>
-		        <tr>
-		            <td>单元格6</td>
-		        </tr>
+		        </s:iterator>
 		    </tbody>
 		</table>       
       </div>
