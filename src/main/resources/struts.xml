@@ -3,10 +3,27 @@
    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
    "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-<constant name="struts.devMode" value="true" />
-<package name="helloworld" extends="struts-default">
-            <action name="login" class="hdfstest.Test" method="login">  
-                <result name="success">test.jsp</result>  
-            </action>
-        </package>        
-    </struts>  
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="true" />
+
+	<package name="default" namespace="/" extends="json-default">
+		<action name="upload_get" class="fileUpload.movieUpload">
+         	<result name="success" type="json"></result>
+            <result name="error" type="chain">upload_post</result>
+   		</action>
+   		
+   		<action name="upload_post" class="fileUpload.movieUpload">
+            <result name="success" type="json"></result>
+            <result name="error" type="json"></result>
+   		</action>
+   		
+   		<action name="showAllVideos" class="" method="">
+            <result name="success">/WEB-INF/content/test.jsp</result>
+   		</action>
+	   	
+	   	<action name="*">
+			<result>/WEB-INF/content/{1}.jsp</result>
+	    </action>
+   	
+   </package>
+</struts>

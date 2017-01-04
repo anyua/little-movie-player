@@ -1,4 +1,4 @@
-package mapreducetest;
+package operations;
 
 import java.io.IOException;
 
@@ -6,7 +6,6 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.RecordReader;
@@ -26,10 +25,10 @@ public class MyRecordReader extends RecordReader<Text, Text> {
     //key、value  
     private Text key = null;  
     private Text value = null;  
-    //定义行阅读器(hadoop.util包下的类)  
-    //private LineReader reader = null;  
     //文件路径
     private Path path;
+    //文件数据
+    private byte[] buffer;
 	
 	@Override
 	public void close() throws IOException {
@@ -76,21 +75,24 @@ public class MyRecordReader extends RecordReader<Text, Text> {
         //找到开始位置开始读取  
         fin.seek(start);  
         //将当期位置置为1  
-        pos = 0;  
+        pos = start;  
+        //申请空间
+        buffer = new byte[(int)(end - start)];
 	}
 
 	@Override
 	public boolean nextKeyValue() throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
-		if(key ==null)
+		if (pos<end)
+		{
 			key = new Text();
-		key.set(path.getName());
-		if(value==null)
-			value= new Text();
-		value.set(path.toString());
-		pos++;
-		if(pos==1)
+            value = new Text();
+            key.set(path.getName());
+            value.set(path.getParent().toString());
+            //System.out.println("---内容: " + value.toString());  
+            pos += buffer.length;    
 			return true;
+		}
 		else
 			return false;
 	}
