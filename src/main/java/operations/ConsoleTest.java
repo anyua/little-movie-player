@@ -16,14 +16,14 @@ public class ConsoleTest {
 		String outputPath = "/home/hadoop/test/split/";
 		//ho.getMovieList();
 		//切割文件
-		ArrayList<String> fileList = fo.split(filePath, outputPath);
+		//ArrayList<String> fileList = fo.split(filePath, outputPath);
 		//获取列表
 		ArrayList<String> videoList = ho.getVideoList();
 		for (String videoInfo:videoList){
 			System.out.println(videoInfo);
 		}
 		//上传到集群
-		ho.upLoad("lalala" , outputPath, fileList);
+		//ho.upLoad("lalala" , outputPath, fileList);
 		//转码并且推流
 		mo.transCode("video/lalala", "output");
 	}

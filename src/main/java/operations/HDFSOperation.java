@@ -62,7 +62,7 @@ public class HDFSOperation {
         Path remotePath = new Path(hdfsPath);
 		Path localPath = new Path(filePath);
 		hdfs.copyFromLocalFile(true, true,localPath,remotePath);
-		hdfs.close();
+		//hdfs.close();
 		}
     public boolean deleteFile (String remoteFilePath, boolean recursive) throws IOException {
         Configuration config = new Configuration();        

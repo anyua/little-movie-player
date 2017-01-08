@@ -127,25 +127,26 @@ public class MapReduceOperation {
 				     }  
 				 }
 				 
-				 String url = "rtmp://localhost:1935/rtmplive/"+context.getJobName();
+				 String url = "rtmp://192.168.1.45:1935/vod3/test";
 				 //推流到rtmp://localhost:1935/rtmplive/video/+视频名字
-				 //fo.push(out+"connect.mkv",url);
+				 fo.push(out+"connect.mkv",url);
 				 
 				 HDFSOperation ho = new HDFSOperation();
-				 //ho.upLoad(hdfspath, localoutput+"connect.mkv");
+				 ho.upLoad(hdfspath+"connected.mkv", out+"connect.mkv");
 		     }
 		     result.set("1");
 		     context.write(key, result);
 		 }
 }
 	
-	public int transCode(String inputPath,String outputPath) throws IOException, ClassNotFoundException, InterruptedException{
+	public String transCode(String inputPath,String outputPath) throws IOException, ClassNotFoundException, InterruptedException{
         HDFSOperation ho = new HDFSOperation();
         ho.deleteFile(outputPath, true);
 		Configuration conf = new Configuration();
+		
         Job job = new Job(conf, inputPath);
         //Job job = Job.getInstance(conf, inputPath);
-        job.setJarByClass(MapReduceOperation.class);
+        job.setJar("/home/hadoop/Untitled.jar");
         job.setMapperClass(TransCodeMapper.class);
         //job.setCombinerClass(PushReducer.class);
         job.setReducerClass(PushReducer.class);
@@ -154,7 +155,10 @@ public class MapReduceOperation {
         job.setInputFormatClass(NoSplittableTextInputFormat.class);
         FileInputFormat.addInputPath(job, new Path(inputPath));
         FileOutputFormat.setOutputPath(job, new Path(outputPath));
-        job.waitForCompletion(true);
-		return 0;
+        //job.waitForCompletion(true);
+        job.submit();
+        System.out.print(job.getJobID().toString());
+        JobID jobId = job.getJobID();
+		return job.getJobID().toString();
 	}
 }

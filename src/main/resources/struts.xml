@@ -21,8 +21,13 @@
             <result name="success">/WEB-INF/content/test.jsp</result>
    		</action>
 	   	<action name="play" class="fileUpload.Play" method = "playMovie">
-	   		<result name="success">/WEB-INF/content/play.jsp</result>
+	   		<result name="success">/WEB-INF/content/loading.jsp</result>
 	   	</action>
+	   	
+	   		   	<action name="getProgressValueByJson" class="fileUpload.getProgressValueByJson" method="getValue">
+	   		<result name="success" type="json"></result>
+	   	</action>
+	   	
 	   	<action name="*">
 			<result>/WEB-INF/content/{1}.jsp</result>
 	    </action>

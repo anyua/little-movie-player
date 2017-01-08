@@ -49,6 +49,14 @@
     <version>1.9.13</version>
 </dependency>
         
+        <dependency>
+        	    <groupId>lalala</groupId>
+    <artifactId>operations</artifactId>
+    <version>1.9.13</version>
+    	<scope>system</scope>
+    	<systemPath>${project.basedir}/Untitled.jar</systemPath>
+        </dependency>
+        
   </dependencies>
   <build>
     <finalName>littleMoviePlayer</finalName>
